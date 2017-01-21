@@ -61,6 +61,7 @@ public class MyArrayListTest {
 
 		assertEquals(1000,resizeCows.size());
 		assertEquals(new Cow("Cow996", 996, "Color996"),resizeCows.get(996));
+		// old frickin cow Sidd... ^^
 	}
 
 }
