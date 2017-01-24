@@ -1,4 +1,4 @@
-# `ArrayList`s
+# `ArrayList`
 
 ## Learning Goals
 

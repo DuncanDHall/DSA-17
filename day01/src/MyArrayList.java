@@ -13,18 +13,20 @@ public class MyArrayList {
     }
 
     public void add(Cow c) {
-        if (size == elems.length) {
-            doubleLength();
+        if (size >= elems.length) {
+            setCapacity(size * 2);
         }
 
         elems[size] = c;
         size++;
     }
 
-    private void doubleLength() {
-        Cow[] newElems = new Cow[size * 2];
-        System.arraycopy(elems, 0, newElems, 0, size);
-        elems = newElems;
+    public void setCapacity(int capacity) {
+        if (capacity > 10) {
+            Cow[] newElems = new Cow[capacity];
+            System.arraycopy(elems, 0, newElems, 0, size);
+            elems = newElems;
+        }
     }
 
     public int size() {
@@ -32,6 +34,9 @@ public class MyArrayList {
     }
 
     public Cow get(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
         return elems[index];
     }
 
@@ -40,12 +45,17 @@ public class MyArrayList {
         System.arraycopy(elems, index+1, elems, index, size-index-1);
         // don't care about elems[size-1] anymore
         size--;
+
+        if (size <= elems.length / 4) {
+            setCapacity(size / 2);
+        }
+
         return c;
     }
 
     public void add(int index, Cow c) {
-        if (size == elems.length) {
-            doubleLength();
+        if (size >= elems.length) {
+            setCapacity(size * 2);
         }
 
         System.arraycopy(elems, index, elems, index+1, size-index);
