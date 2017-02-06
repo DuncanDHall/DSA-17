@@ -76,4 +76,41 @@ public class QueueTest {
         assertThat(maxQueue.dequeueMax(), is(1));
     }
 
+    @Test
+    public void testResizeQueue() {
+        assertThat(queue.getQ(), is(new int[]{1,2,3,0,0}));
+        queue.enqueue(4);
+        queue.enqueue(5);
+        queue.enqueue(6);
+        assertThat(queue.getQ(), is(new int[]{1,2,3,4,5,6,0,0,0,0}));
+    }
+
+    @Test
+    public void testLoopQueue() {
+        queue.dequeue();
+        queue.enqueue(4);
+        queue.dequeue();
+        queue.dequeue();
+        queue.enqueue(5);
+        queue.enqueue(6);
+        assertThat(queue.getQ(), is(new int[]{6, 2, 3, 4, 5}));
+    }
+
+    @Test
+    public void testResizeU() {
+        queue.dequeue();
+        assertThat(queue.getQ(), is(new int[]{1, 2, 3, 0, 0}));
+        queue.enqueue(4);
+        queue.dequeue();
+        queue.enqueue(5);
+        queue.dequeue();
+        queue.enqueue(6);
+        assertThat(queue.getQ(), is(new int[]{6,2,3,4,5}));
+        queue.enqueue(7);
+        assertThat(queue.getQ(), is(new int[]{0,0,0,4,5,6,7,0,0,0}));
+        queue.dequeue();
+        queue.dequeue();
+        queue.dequeue();
+        assertThat(queue.getQ(), is(new int[]{0,7,0,0,0}));
+    }
 }
