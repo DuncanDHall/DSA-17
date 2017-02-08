@@ -1,3 +1,4 @@
+import java.security.InvalidKeyException;
 import java.util.*;
 
 /**
@@ -44,9 +45,18 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	// Returns the entry that contains the target key, or null if there is none.
 	private Entry findEntry(Object target) {
-		// TODO
+		for (Entry e : entries) {
+			if (e.getKey() == target) return e;
+		}
 		return null;
 	}
+
+	private int findIndex (Object target) throws InvalidKeyException {
+	    for (int i = 0; i < entries.size(); i++) {
+	        if (entries.get(i).key.equals(target)) return i;
+        }
+        throw(new InvalidKeyException());
+    }
 
 	// Compares two keys or two values, handling null correctly.
 	private boolean equals(Object target, Object obj) {
@@ -73,8 +83,8 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
-		// TODO
-		return null;
+	    Entry e = findEntry(key);
+	    return (null == e)? null: e.getValue();
 	}
 
 	@Override
@@ -93,8 +103,10 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		// TODO
-		return null;
+	    Entry e = findEntry(key);
+	    if (e == null) entries.add(new Entry(key, value));
+        else e.setValue(value);
+		return value;
 	}
 
 	@Override
@@ -106,9 +118,12 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-		// TODO
-		return null;
-	}
+        try {
+            return entries.remove(findIndex(key)).getValue();
+        } catch (InvalidKeyException e) {
+            return null;
+        }
+    }
 
 	@Override
 	public int size() {

@@ -34,7 +34,7 @@ public class PsetProblems {
 
     public static StackADT<Integer> sortStackLimitedMemory(StackADT<Integer> s) {
 
-        Stack<Integer> res = new Stack<Integer>();
+        StackADT<Integer> res = new MyStack();
         int h;
 
         while (!s.isEmpty()) {
