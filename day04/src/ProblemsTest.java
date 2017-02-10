@@ -2,12 +2,12 @@
  *
  */
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
-import java.util.*;
-
 import org.junit.Test;
+
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ProblemsTest {
 
@@ -61,9 +61,9 @@ public class ProblemsTest {
         out = Problems.removeKDigits(in, 2).toArray();
         assertThat(out, is(new Integer[]{5, 3, 4, 3}));
 
-        in = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        out = Problems.removeKDigits(in, 5).toArray();
-        assertThat(out, is(new Integer[]{1, 2, 3, 4}));
+        in = new int[]{1, 2, 3, 4, 5, 6, 8, 7, 9};
+        out = Problems.removeKDigits(in, 2).toArray();
+        assertThat(out, is(new Integer[]{1, 2, 3, 4, 5, 6, 7}));
 
         in = new int[]{1, 2, 3, 1, 5, 6, 7, 2, 9};
         out = Problems.removeKDigits(in, 4).toArray();

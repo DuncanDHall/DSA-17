@@ -23,13 +23,14 @@ Midnight, Feb. 9, 2017
 ### Code
 
 Finish the implementation of these methods in MyHashMap:
-* `makeMaps(int size)` Initialize `maps` to `n` LinearMaps, where `n=size`
-* `chooseMap(Object key)` given a key, return the `LinearMap` where the `K, V` pair would be stored if it is in the map.
-* `containsKey(Object key)` return true if key is in map
-* `containsValue(Object value)` return true if value is in map
-* `rehash(double growthFactor)` Changes the number of maps and rehashes the existing entries. If growthFactor is 2, the number of maps doubles. If it is 0.25, the number of maps is divided by 4.
-* `put(K key, V value)` add a new key-value pair to the map. Grow if needed, according to `ALPHA`.
-* `remove(Object key)` remove and return the key-value pair associated with the given key. Shrink if needed, according to `BETA`. Make sure the number of `LinearMaps` doesn't go below `MIN_MAPS`. 
+
+- `makeMaps(int size)` Initialize `maps` to `n` LinearMaps, where `n=size`
+- `chooseMap(Object key)` given a key, return the `LinearMap` where the `K, V` pair would be stored if it is in the map.
+- `containsKey(Object key)` return true if key is in map
+- `containsValue(Object value)` return true if value is in map
+- `rehash(double growthFactor)` Changes the number of maps and rehashes the existing entries. If growthFactor is 2, the number of maps doubles. If it is 0.25, the number of maps is divided by 4.
+- `put(K key, V value)` add a new key-value pair to the map. Grow if needed, according to `ALPHA`.
+- `remove(Object key)` remove and return the key-value pair associated with the given key. Shrink if needed, according to `BETA`. Make sure the number of `LinearMaps` doesn't go below `MIN_MAPS`. 
 
 ### PSet Problem
 **Time: O(N^2), Space: O(N)**.  Given an array containing n tuples of points in a plane, a "boomerang" is a set of points (i, j, k) such that the distance between i and j is equal to the distance between j and k.  Find the number of boomerangs on the plane. Note that you can never have an odd number of boomerangs because every boomerang set counts twice, as it can be flipped. For example:

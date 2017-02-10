@@ -128,7 +128,7 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public void putAll(Map<? extends K, ? extends V> map) {
-		for (Map.Entry<? extends K, ? extends V> entry: map.entrySet()) {
+		for (Map.Entry<? extends K, ? extends V> entry: entries) {
 			put(entry.getKey(), entry.getValue());
 		}
 	}
