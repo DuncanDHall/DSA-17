@@ -1,9 +1,7 @@
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.IOException;
 
 public class WikiPhilosophy {
 
@@ -41,8 +39,8 @@ public class WikiPhilosophy {
 		// Loop until reach limit, get stuck in a loop, reach a page with no links, or reach the destination
 		Element elt = getFirstValidLink(source);
 		String url = elt.attr("abs:href");
-		if (url.equals(destination))
-			return true;
+		if (url.equals(destination)) return true;
+
 		return false;
 	}
 
