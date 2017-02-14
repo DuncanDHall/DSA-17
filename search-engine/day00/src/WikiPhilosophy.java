@@ -38,10 +38,20 @@ public class WikiPhilosophy {
 		// TODO: fix this method.
 		// Loop until reach limit, get stuck in a loop, reach a page with no links, or reach the destination
 		Element elt = getFirstValidLink(source);
+		if(elt == null){
+			return false;
+		}
 		String url = elt.attr("abs:href");
-		if (url.equals(destination)) return true;
+		if (url.equals(destination)){
+			return true;
 
-		return false;
+		}
+		else if(limit == 1){
+			return false;
+		}
+		else{
+			return testConjecture(destination, url, limit - 1);
+		}
 	}
 
 	/**
