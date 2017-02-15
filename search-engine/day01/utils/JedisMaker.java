@@ -1,14 +1,10 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
+
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Set;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Transaction;
 
 public class JedisMaker {
 
@@ -106,6 +102,7 @@ public class JedisMaker {
 		Jedis jedis = make();
 
         // clearAll(jedis);
+		jedis.flushAll();
 
 		// String
         /*
@@ -113,6 +110,8 @@ public class JedisMaker {
         - Retrieve that value
         - Print it
          */
+        jedis.set("greeting", "hello! butt");
+        System.out.println(jedis.get("greeting"));
 
 		// Set
         /*
@@ -121,6 +120,8 @@ public class JedisMaker {
         - Print whether "merge" is a member of that set
         - Print whether "insertion" is a member of that set
          */
+        jedis.sadd("sorts", "quick", "merge", "heap");
+        System.out.println(jedis.smembers("sorts"));
 
 		// List
         /*
@@ -128,6 +129,9 @@ public class JedisMaker {
         "stacks", "queues", "lists"
         - Print the elements at the 0th and 2nd indices of that list
          */
+        jedis.lpush("lineards", "stacks", "queues", "lists");
+        System.out.println(jedis.lindex("lineards", 0));
+        System.out.println(jedis.lindex("lineards", 2));
 
 		// Hash
 		/*
@@ -137,6 +141,12 @@ public class JedisMaker {
 		- Increment the nonexistent key "word2" by 1
 		- Retrieve and print the values at both keys in the hash "myhash"
 		*/
+		jedis.hincrBy("myhash", "word1", 2);  // set initial value (increment from zero)
+        jedis.hincrBy("myhash", "word1", 1);
+        jedis.hincrBy("myhash", "word2", 1);  // another initial put
+        System.out.println(jedis.hget("myhash", "word1"));
+        System.out.println(jedis.hget("myhash", "word2"));
+
 
 	    jedis.close();
 	}
