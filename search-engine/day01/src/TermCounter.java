@@ -1,21 +1,38 @@
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class TermCounter {
 
 	private Map<String, Integer> map;
 	private String label;
+	private HashSet<String> stopWords;
 
 	public TermCounter(String label) {
 		this.label = label;
 		this.map = new HashMap<String, Integer>();
-	}
+
+		stopWords = new HashSet<String>();
+
+
+		// TODO - review this Kevin
+        try {
+            BufferedReader fileReader = new BufferedReader(new FileReader("resources/stopwords.txt"));
+            String word;
+            while ((word = fileReader.readLine()) != null) {
+                stopWords.add(word);
+            }
+        } catch (IOException e) {
+            System.out.println("Issue with reading resources/stopwords.txt");
+            e.printStackTrace();
+        }
+
+    }
 
 	public String getLabel() {
 		return label;
@@ -49,10 +66,11 @@ public class TermCounter {
 		// replace punctuation with spaces, convert to lower case, and split on whitespace
 		String[] array = text.replaceAll("\\pP", " ").toLowerCase().split("\\s+");
 
+        // TODO - review this Kevin
 		for(String word: array){
-			incrementTermCount(word);
+		    if (!stopWords.contains(word)) incrementTermCount(word);
 		}
-		// increment the count for each term
+		// increment the count for each term not included in stopwords
 	}
 
 	public void incrementTermCount(String term) {

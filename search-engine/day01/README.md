@@ -41,6 +41,7 @@ We do not provide test files for this homework. You will need to justify the cor
 You will improve your Indexer and Crawler in this homework.
 
 * For the indexer, after you index each page, push the relevant data to Redis. *Use a `Transaction t = jedis.multi()` to make multiple updates, rather than pushing an update every time you increment a count. This will improve the performance of your indexer.* Here's a sample `Transaction`, updating a TermCounter hash and a urlSet set:
+
 ```java
 Transaction t = jedis.multi();
 
@@ -54,6 +55,7 @@ t.sadd(urlSetKey, url);
 List<Object> res = t.exec();
 return res;
 ```
+
 * For the crawler, implement `crawl()` that will take each of the URLs in the queue and 1. index the page 2. add all hyperlinks on that page to the queue using the provided method `queueInternalLinks()`. Make sure you do not index the same page repeatedly.
 * You are also provided the `StopWords.java` class in `utils/` that has the method `getStopWords()`. This will return a `Set` of stop words that you should not index.
 

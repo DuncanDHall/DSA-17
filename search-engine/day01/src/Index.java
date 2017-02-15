@@ -1,18 +1,21 @@
-import com.sun.xml.internal.xsom.impl.Ref;
 import org.jsoup.select.Elements;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Index {
 
 	// Index: map of words to URL and their counts
 	private Map<String, Set<TermCounter>> index = new HashMap<String, Set<TermCounter>>();
+    Jedis jedis;
 
-	public void add(String term, TermCounter tc) {
+    public Index() throws IOException {
+        jedis = JedisMaker.make();
+    }
+
+    public void add(String term, TermCounter tc) {
 		// if we're seeing a term for the first time, make a new Set
 		// otherwise we can add the term to an existing Set
         Set<TermCounter> thing = get(term);
@@ -32,15 +35,26 @@ public class Index {
 	}
 
 	public void indexPage(String url, Elements paragraphs) {
+
+	    //TODO - check over this Kevin
+	    Transaction t = jedis.multi();
+	    String hashName = "TermCounter: " + url;
+
 		// make a TermCounter and count the terms in the paragraphs
 		TermCounter counter = new TermCounter(url);
 		counter.processElements(paragraphs);
 
-		// for each term in the TermCounter, add the TermCounter to the index
+		// for each term in the TermCounter, add the TermCounter to the redis db
+//        for(String term: counter.keySet()){
+//            t.hset(hashName, term, counter.get(term).toString());
+//            t.sadd("urlSet: " + term, url);
+//        }
         for(String term: counter.keySet()){
-            add(term, counter);
+            t.hset("TermCounter: " + url, term, counter.get(term).toString());
+            t.sadd("urlSet: " + term, url);
         }
 
+        t.exec();
 	}
 
 	public void printIndex() {
@@ -61,12 +75,25 @@ public class Index {
 		return index.keySet();
 	}
 
+	// TODO - review this Kevin
+    public Map<String,Integer> getCounts(String key) {
+        Map<String, Integer> res = new HashMap<String, Integer>();
+
+        Set<String> urls = jedis.smembers("urlSet: " + key);
+        System.out.println();
+        for (String url: urls) {
+            res.put(url, Integer.parseInt(jedis.hget("TermCounter: " + url, key)));
+        }
+        return res;
+    }
+
 	public static void main(String[] args) throws IOException {
 
 		WikiFetcher wf = new WikiFetcher();
 		Index indexer = new Index();
 
-		String url = "https://en.wikipedia.org/wiki/Java_(programming_language)";
+
+        String url = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		Elements paragraphs = wf.fetchWikipedia(url);
 		indexer.indexPage(url, paragraphs);
 

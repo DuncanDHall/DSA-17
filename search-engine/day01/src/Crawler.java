@@ -3,6 +3,7 @@ import org.jsoup.select.Elements;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -34,7 +35,24 @@ public class Crawler {
 	 * @throws IOException
 	 */
 	public void crawl(int limit) throws IOException {
-		// TODO
+
+		// TODO - check over this Kevin
+        HashSet<String> visited = new HashSet<String>();
+
+        while (limit > 0) {
+            String url = queue.remove();
+            System.out.println("currently indexing: " + url);
+            if (!visited.contains(url)) {
+                Elements paragraphs = wf.fetchWikipedia(url);
+                queueInternalLinks(paragraphs);
+
+                index.indexPage(url, paragraphs);
+            }
+            limit--;
+        }
+
+        System.out.println("crawl complete");
+
 	}
 
 	void queueInternalLinks(Elements paragraphs) {
@@ -58,25 +76,28 @@ public class Crawler {
 
 	public static void main(String[] args) throws IOException {
 		// make a WikiCrawler
-		Jedis jedis = JedisMaker.make();
+        System.out.println("initializing jedis...");
+        Jedis jedis = JedisMaker.make();
+        jedis.flushAll(); // TODO - remove this if you want to crawl only once
 		Index index = new Index();
 		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		Crawler wc = new Crawler(source, index);
 
 		// for testing purposes, load up the queue
-		Elements paragraphs = wf.fetchWikipedia(source);
-		wc.queueInternalLinks(paragraphs);
+//		Elements paragraphs = wf.fetchWikipedia(source);
+//		wc.queueInternalLinks(paragraphs);
 
         // TODO: Crawl outward starting at source
+        System.out.println("beginning wiki crawl...");
+       wc.crawl(10);
 
 		// TODO: Test that your index contains multiple pages.
 		// Here is some sample code that tests your index, which assumes
 		// you have written a getCounts() method in Index, which returns
 		// a map from {url: count} for a given keyword
-		// Map<String, Integer> map = index.getCounts("programming");
-		// for (Map.Entry<String, Integer> entry: map.entrySet()) {
-		// 	System.out.println(entry);
-		// }
-
+		Map<String, Integer> map = index.getCounts("programming");
+		for (Map.Entry<String, Integer> entry: map.entrySet()) {
+		    System.out.println(entry);
+		}
 	}
 }
