@@ -36,7 +36,6 @@ public class Index {
 
 	public void indexPage(String url, Elements paragraphs) {
 
-	    //TODO - check over this Kevin
 	    Transaction t = jedis.multi();
 	    String hashName = "TermCounter: " + url;
 
@@ -75,7 +74,7 @@ public class Index {
 		return index.keySet();
 	}
 
-	// TODO - review this Kevin
+
     public Map<String,Integer> getCounts(String key) {
         Map<String, Integer> res = new HashMap<String, Integer>();
 

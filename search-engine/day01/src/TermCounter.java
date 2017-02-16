@@ -20,7 +20,6 @@ public class TermCounter {
 		stopWords = new HashSet<String>();
 
 
-		// TODO - review this Kevin
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader("resources/stopwords.txt"));
             String word;
@@ -66,7 +65,6 @@ public class TermCounter {
 		// replace punctuation with spaces, convert to lower case, and split on whitespace
 		String[] array = text.replaceAll("\\pP", " ").toLowerCase().split("\\s+");
 
-        // TODO - review this Kevin
 		for(String word: array){
 		    if (!stopWords.contains(word)) incrementTermCount(word);
 		}

@@ -36,7 +36,6 @@ public class Crawler {
 	 */
 	public void crawl(int limit) throws IOException {
 
-		// TODO - check over this Kevin
         HashSet<String> visited = new HashSet<String>();
 
         while (limit > 0) {
@@ -57,11 +56,11 @@ public class Crawler {
 
 	void queueInternalLinks(Elements paragraphs) {
 		for (Element paragraph: paragraphs) {
-			queueInternalLinks(paragraph);
+			queueInternalLink(paragraph);
 		}
 	}
 
-	private void queueInternalLinks(Element paragraph) {
+	private void queueInternalLink(Element paragraph) {
 
 		Elements elts = paragraph.select("a[href]");
 		for (Element elt: elts) {
