@@ -1,7 +1,12 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Comparator;
+import java.util.Collections;
 
 import redis.clients.jedis.Jedis;
 
@@ -15,8 +20,11 @@ public class WikiSearch {
     }
 
     public Integer getRelevance(String url) {
-        // TODO
-        return null;
+        Integer relevance = map.get(url);
+        if(relevance == null){
+            return 0;
+        }
+        return relevance;
     }
 
     // Prints the contents in order of term frequency.
@@ -29,53 +37,81 @@ public class WikiSearch {
 
     // Computes the union of two search results.
     public WikiSearch or(WikiSearch that) {
-        // TODO
-        return null;
+        Map<String, Integer> orMap = new HashMap<String, Integer>();
+        Map<String, Integer> m = that.map;
+        for(String key: m.keySet()){
+            if(!map.containsKey(key)){
+                orMap.put(key, m.get(key));
+            }
+            else{
+                orMap.put(key, totalRelevance(m.get(key), map.get(key)));
+            }
+        }
+        for(String key: map.keySet()){
+            if(!m.containsKey(key)){
+                orMap.put(key, map.get(key));
+            }
+        }
+
+
+
+        return new WikiSearch(orMap);
     }
 
     // Computes the intersection of two search results.
     public WikiSearch and(WikiSearch that) {
-        // TODO
-        return null;
+        Map<String, Integer> andMap = new HashMap<String, Integer>();
+        Map<String, Integer> m = that.map;
+        for(String key: m.keySet()){
+            if(map.containsKey(key)) {
+                andMap.put(key, totalRelevance(m.get(key), map.get(key)));
+            }
+        }
+
+        return new WikiSearch(andMap);
     }
 
-    // Computes the intersection of two search results.
+    // Computes the difference of two search results.
     public WikiSearch minus(WikiSearch that) {
-        // TODO
-        return null;
+        Map<String, Integer> minusMap = new HashMap<String, Integer>();
+        Map<String, Integer> m = that.map;
+        for(String key: map.keySet()){
+            if(!m.containsKey(key)) {
+                minusMap.put(key, map.get(key));
+            }
+        }
+
+        return new WikiSearch(minusMap);
     }
 
     // Computes the relevance of a search with multiple terms.
     protected int totalRelevance(Integer rel1, Integer rel2) {
-        // TODO
-        return 0;
+
+        return rel1 + rel2;
     }
+
 
     // Sort the results by relevance.
     public List<Entry<String, Integer>> sort() {
-        // TODO
-        return null;
+        Set<Entry<String, Integer>> entries = map.entrySet();
+        List<Entry<String, Integer>> listOfEntries = new ArrayList<>(entries);
+        Collections.sort(listOfEntries, Comparator.comparing(Map.Entry::getValue));
+        return listOfEntries;
     }
-
 
     // Performs a search and makes a WikiSearch object.
     public static WikiSearch search(String term, Index index) {
-        // TODO: Use the index to get a map from URL to count
-
-        // Fix this
-        Map<String, Integer> map = null;
+        Map<String, Integer> map = index.getCounts(term);
 
         // Store the map locally in the WikiSearch
         return new WikiSearch(map);
     }
 
-    // TODO: Choose an extension and add your methods here
 
     public static void main(String[] args) throws IOException {
 
         // make a Index
-        Jedis jedis = JedisMaker.make();
-        Index index = new Index(jedis); // You might need to change this, depending on how your constructor works.
+        Index index = new Index(); // You might need to change this, depending on how your constructor works.
 
         // search for the first term
         String term1 = "java";

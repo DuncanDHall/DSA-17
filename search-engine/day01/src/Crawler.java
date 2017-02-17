@@ -88,7 +88,7 @@ public class Crawler {
 
         // TODO: Crawl outward starting at source
         System.out.println("beginning wiki crawl...");
-       wc.crawl(10);
+       wc.crawl(5);
 
 		// TODO: Test that your index contains multiple pages.
 		// Here is some sample code that tests your index, which assumes
