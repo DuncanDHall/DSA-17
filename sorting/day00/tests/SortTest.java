@@ -13,6 +13,7 @@ public class SortTest {
     private int[] emptyCase;
     private int[] oneCase;
     private int[] twoCase;
+    private int[] shortCase;
     private int[] fastCase;
     private int[] slowCase;
 
@@ -23,6 +24,7 @@ public class SortTest {
         emptyCase = generateRandomArrayOfSize(0);
         oneCase = generateRandomArrayOfSize(1);
         twoCase = generateRandomArrayOfSize(2);
+        shortCase = generateRandomArrayOfSize(10);
         fastCase = generateRandomArrayOfSize(1000);
         slowCase = generateRandomArrayOfSize(100000);
     }
@@ -41,6 +43,7 @@ public class SortTest {
         assertArrayEquals(sorter.sort(emptyCase), emptyCase);
         assertArrayEquals(sorter.sort(oneCase), sort(oneCase));
         assertArrayEquals(sorter.sort(twoCase), sort(twoCase));
+        assertArrayEquals(sorter.sort(shortCase), sort(shortCase));
         assertArrayEquals(sorter.sort(fastCase), sort(fastCase));
         assertArrayEquals(sorter.sort(slowCase), sort(slowCase));
     }
@@ -79,6 +82,7 @@ public class SortTest {
 
         a = new int[] {8, 3, 4, 6, 7, 2, 1, 2};
         int[] a_sorted = sort(a);
+        assertArrayEquals(a, new int[] {8, 3, 4, 6, 7, 2, 1, 2});
         quickSort.quickSort(a, 0, a.length-1);
         assertArrayEquals(a, a_sorted);
 

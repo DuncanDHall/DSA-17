@@ -53,8 +53,21 @@ public class PeakFinding {
 
 
     public static int findOneDPeak(int[] nums){
-    	// TODO
-        return -1;
+        int d = 2;
+        int i = nums.length / d;
+
+        while (true) {
+            d = d * 2;
+            int delta = Math.max(1, nums.length / d);
+            switch (peak(i, nums)){
+                case 0:
+                    return i;
+                case -1:
+                    i -= delta;
+                case 1:
+                    i += delta;
+            }
+        }
     }
 
     public static int[] findTwoDPeak(int[][] nums){
