@@ -1,4 +1,3 @@
-
 public class PeakFinding {
 
     // Return -1 is left is higher, 1 if right is higher, 0 if peak
@@ -48,54 +47,22 @@ public class PeakFinding {
     }
 
 
-
     public static int findOneDPeak(int[] nums){
-        int d = 2;
-        int i = nums.length / d;
-
-        while (true) {
-            d = d * 2;
-            int delta = Math.max(1, nums.length / d);
-            switch (peak(i, nums)){
-                case 0:
-                    return i;
-                case -1:
-                    i -= delta;
-                case 1:
-                    i += delta;
-            }
+        int lo = 0;
+        int hi = nums.length;
+        while (lo < hi) {
+            int mid = (hi+lo)/2;
+            int direction = peak(mid, nums);
+            if (direction == 0) return mid;
+            else if (direction == -1) hi = mid;
+            else if (direction == 1) lo = mid+1;
         }
+        return -1;
     }
 
-    public static int[] findTwoDPeak(int[][] nums){
-        int w = nums.length;
-        int h = nums[0].length;
-
-        int x = 0;
-        int y = 0;
-
-        while (true) {
-            switch (peakX(x, y, nums)) {
-                case -1:
-                    x--;
-                    break;
-                case 1:
-                    x++;
-                    break;
-                case 0:
-                    switch (peakY(x, y, nums)) {
-                        case -1:
-                            y--;
-                            break;
-                        case 1:
-                            y++;
-                            break;
-                        case 0:
-                            return new int[] {x, y};
-                    }
-                    break;
-            }
-        }
+    public static int[] findTwoDPeak(int[][] nums) {
+        // TODO
+        return null;
     }
 
 }
