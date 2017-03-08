@@ -71,9 +71,34 @@ public class PeakFinding {
     }
 
     public static int[] findTwoDPeak(int[][] nums){
-    	// TODO: Optionally due by 2/23. Will be due on 2/27.
-        int[] answer = {-1,-1};
-        return answer;
+        int w = nums.length;
+        int h = nums[0].length;
+
+        int x = 0;
+        int y = 0;
+
+        while (true) {
+            switch (peakX(x, y, nums)) {
+                case -1:
+                    x--;
+                    break;
+                case 1:
+                    x++;
+                    break;
+                case 0:
+                    switch (peakY(x, y, nums)) {
+                        case -1:
+                            y--;
+                            break;
+                        case 1:
+                            y++;
+                            break;
+                        case 0:
+                            return new int[] {x, y};
+                    }
+                    break;
+            }
+        }
     }
 
 }

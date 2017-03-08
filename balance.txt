@@ -1,0 +1,14 @@
+
+balance(n):
+  if n very right heavy:
+    if n.R is left heavy:
+      n.R = rotate_R(n.R)  # returns the new root node of the subtree
+    n = rotate_L(n)
+
+  if n very left heavy:
+    if n.L is right heavy:
+      n.L = rotate_L(n.L)
+    n = rotate_R(n)
+
+  return n
+
