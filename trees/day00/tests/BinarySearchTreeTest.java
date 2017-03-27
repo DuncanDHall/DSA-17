@@ -1,8 +1,3 @@
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 public class BinarySearchTreeTest {
     private Integer[][] inputs;
@@ -130,14 +128,29 @@ public class BinarySearchTreeTest {
     }
 
 
+//    private void delTest(BinarySearchTree<Integer> bst, Integer[] input) {
+//        Integer[] sorted = sorted(input);
+//        List<Integer> list = Arrays.asList(sorted);
+//        list = new ArrayList<>(list);
+//        for (int j = 0; j <input.length; j++) {
+//            int randomIndex = ThreadLocalRandom.current().nextInt(input.length-j);
+//            bst.delete(list.get(randomIndex));
+//            list.remove(randomIndex);
+//            Integer[] expected = Arrays.copyOf(list.toArray(), list.size(), Integer[].class);
+//            Object[] traversal = bst.inOrderTraversal().toArray();
+//            Integer[] received = Arrays.copyOf(traversal, traversal.length, Integer[].class);
+//            assertArrayEquals(expected, received);
+//        }
+//    }
+
     private void delTest(BinarySearchTree<Integer> bst, Integer[] input) {
         Integer[] sorted = sorted(input);
         List<Integer> list = Arrays.asList(sorted);
         list = new ArrayList<>(list);
         for (int j = 0; j <input.length; j++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(input.length-j);
-            bst.delete(list.get(randomNum));
-            list.remove(randomNum);
+            int randomIndex = ThreadLocalRandom.current().nextInt(input.length-j);
+            bst.delete(input[j]);
+            list.remove(input[j]);
             Integer[] expected = Arrays.copyOf(list.toArray(), list.size(), Integer[].class);
             Object[] traversal = bst.inOrderTraversal().toArray();
             Integer[] received = Arrays.copyOf(traversal, traversal.length, Integer[].class);
