@@ -11,6 +11,7 @@ For this homework, we provide you with an implementation of a directed graph, as
 In `GraphProblems.java`:
 
 Methods:
+
 - `boolean connected(Graph g, int v, int u)` Returns whether there is a path from `v` to `u`.
 - `List<Integer> topologicalOrder(Digraph g)` Returns the vertices in a graph, in topological order. If there is an edge pointing from `u` to `v`, then `u` comes before `v` in the topological ordering. You can assume the graph is acyclic.
 - `boolean hasCycle(UndirectedGraph g)` Return whether an **undirected** graph has a cycle.

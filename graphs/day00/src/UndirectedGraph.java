@@ -1,16 +1,24 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class UndirectedGraph implements Graph {
 
+    private ArrayList<Integer> nodes;
+    private HashMap<Integer, List<Integer>> edges;
+
     public UndirectedGraph(int n) {
-        // TODO: Your code here
+        for (int i = 0; i < n; i++) {
+            nodes.add(i);
+        }
+        edges = new HashMap<>();
     }
 
     @Override
     public void addEdge(int v, int w) {
+        if (!edges.containsKey(v)) edges.put(v, new LinkedList<>());
+        edges.get(v).add(w);
         // TODO: Your code here
     }
 
