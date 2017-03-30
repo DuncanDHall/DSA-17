@@ -110,9 +110,19 @@ public class NQueensTest {
      */
     @Test
     public void testNQueensSolution() {
+//        NQueens.nQueensSolutions(4);  // 16ms
+//        NQueens.nQueensSolutions(6);  // 14ms
+//        NQueens.nQueensSolutions(8);  // 11-56ms
+//        NQueens.nQueensSolutions(10);  // 19-56ms
+//        NQueens.nQueensSolutions(12);  // 131-193ms
+//        NQueens.nQueensSolutions(13);  // 744-824ms
+//        NQueens.nQueensSolutions(14);  // 4258-4463ms
+//        NQueens.nQueensSolutions(15);  // 28,271ms
+
         assertValidSolutions(NQueens.nQueensSolutions(4), 2);
         assertValidSolutions(NQueens.nQueensSolutions(8), 92);
         assertValidSolutions(NQueens.nQueensSolutions(12), 14200);
+        System.out.println(NQueens.nQueensSolutions(14).size());
     }
 
 
