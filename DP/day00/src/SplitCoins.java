@@ -24,7 +24,6 @@ public class SplitCoins {
         // CALL RECURSIVE FUNCTION ON PROBLEM THAT YOU WANT TO SOLVE
         return recursiveFunction(diff, p, coins, memo);
 
-        // TODO
     }
 
 
