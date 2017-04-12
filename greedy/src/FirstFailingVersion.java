@@ -11,7 +11,7 @@ public class FirstFailingVersion {
             return lower;
         }
 
-        long split = (lower + upper) / 2;
+        long split = (lower + upper) / 2;  // possibly should be divided before adding?
 
         if (isBadVersion.isFailingVersion(split)) {
             return firstBadVersionHelper(lower, split, isBadVersion);
