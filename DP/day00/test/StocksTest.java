@@ -28,8 +28,9 @@ public class StocksTest {
             for(int j = 0; j < n; j++){
                 prices[j] = input.nextInt();
             }
-
-            assertEquals(output.nextInt(),new Stocks().maxProfit(prices));
+            int expected = output.nextInt();
+            int actual = new Stocks().maxProfit(prices);
+            assertEquals(expected, actual);
 
             input.close();
             output.close();
@@ -41,7 +42,7 @@ public class StocksTest {
      */
     @Test
     public void testMaxProfitWithK() throws FileNotFoundException {
-        for(int i = 1; i <= 10; i++){
+        for(int i = 1; i <= 9; i++){
             Scanner input = new Scanner(new File(
                     "testcases/maxprofitk." + i + ".in"));
             Scanner output = new Scanner(new File(
