@@ -32,10 +32,12 @@ should return the array `{0, 3, 6}`.
 **Reminders from class:**
 
 The cost of line l is c(l):
+
 * c(l) = INF, if total_length(l) > m
 * c(l) = (m - total_length(l))^3, otherwise
 
 where:
+
 * total_length = words + single space between each word (i.e. the number of words in the line - 1)
 * m = the maximum length of a line
 

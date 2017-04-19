@@ -1,14 +1,12 @@
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class StocksTest {
 
@@ -30,6 +28,11 @@ public class StocksTest {
             }
             int expected = output.nextInt();
             int actual = new Stocks().maxProfit(prices);
+            if (expected != actual) {
+                System.out.println(Arrays.toString(prices));
+                System.out.println("a:" + actual);
+                System.out.println("e:" + expected);
+            }
             assertEquals(expected, actual);
 
             input.close();
