@@ -24,7 +24,6 @@ public class TextJustification {
             res.add(c);
         }
 
-        // TODO: Your code here
         return res;
     }
 
