@@ -39,4 +39,8 @@ public class DungeonGame {
         // TODO: Your code here
         return memo[0][0];
     }
+
+    public static void main(String[] args) {
+        main(new String[0]);
+    }
 }
