@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class PeakFinding {
 
     // Return -1 is left is higher, 1 if right is higher, 0 if peak
@@ -60,9 +62,40 @@ public class PeakFinding {
         return -1;
     }
 
-    public static int[] findTwoDPeak(int[][] nums) {
-        // TODO
-        return null;
+
+    public static int[] findTwoDPeak(int[][] nums){
+        int w = nums.length;
+        int h = nums[0].length;
+
+        for (int i = 0; i < nums.length; i++) {
+            System.out.println(Arrays.toString(nums[i]));
+        }
+
+        int x = 0;
+        int y = 0;
+
+        while (true) {
+            switch (peakX(x, y, nums)) {
+                case -1:
+                    x--;
+                    break;
+                case 1:
+                    x++;
+                    break;
+                case 0:
+                    switch (peakY(x, y, nums)) {
+                        case -1:
+                            y--;
+                            break;
+                        case 1:
+                            y++;
+                            break;
+                        case 0:
+                            return new int[] {y, x};
+                    }
+                    break;
+            }
+        }
     }
 
 }
