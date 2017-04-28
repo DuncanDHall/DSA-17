@@ -61,8 +61,10 @@ public class PeakFinding {
                     return i;
                 case -1:
                     i -= delta;
+                    break;
                 case 1:
                     i += delta;
+                    break;
             }
         }
     }
