@@ -67,6 +67,8 @@ public class HeapSortTest {
         assertArrayEquals(sorter.sort(emptyCase), emptyCase);
         assertArrayEquals(sorter.sort(oneCase), sort(oneCase));
         assertArrayEquals(sorter.sort(twoCase), sort(twoCase));
+        int[] myT = new int[] {1, 5, 2, 5, 3, 5, 4, 5, 7};
+        assertArrayEquals(sorter.sort(myT), sort(myT));
         assertArrayEquals(sorter.sort(fastCase), sort(fastCase));
         assertArrayEquals(sorter.sort(slowCase), sort(slowCase));
     }

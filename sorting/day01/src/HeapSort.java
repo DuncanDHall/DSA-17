@@ -14,17 +14,50 @@ public class HeapSort extends SortAlgorithm {
         return 2 * (i + 1);
     }
 
+    private boolean hasLeftChild(int i) {
+        return leftChild(i) < size;
+    }
+
+    private boolean hasRightChild(int i) {
+        return rightChild(i) < size;
+    }
+
     // Recursively corrects the position of element indexed i: check children, and swap with larger child if necessary.
     public void heapify(int i) {
-        // TODO
+        int lc = leftChild(i);
+        int rc = rightChild(i);
+
+        if (hasLeftChild(i) && hasRightChild(i)) {
+            if (heap[lc] > heap[rc] && heap[lc] > heap[i]) {
+                swap(i, lc);
+                heapify(lc);
+            }
+            else if (heap[rc] > heap[i]) {
+                swap(i, rc);
+                heapify(rc);
+            }
+        }
+        else if (hasLeftChild(i) && heap[lc] > heap[i]) {
+            swap(i, lc);
+            heapify(lc);
+        }
+        else if (hasRightChild(i) && heap[rc] > heap[i]) {
+            swap(i, rc);
+            heapify(rc);
+        }
+
     }
 
     // Given the array, build a heap by correcting every non-leaf's position.
     public void buildHeapFrom(int[] array) {
         this.heap = array;
         this.size = array.length;
-        // TODO
+
+        for (int i = heap.length / 2 - 1; i >= 0; i--) {
+            heapify(i);
+        }
     }
+
 
     /**
      * Best-case runtime:
@@ -36,9 +69,21 @@ public class HeapSort extends SortAlgorithm {
     @Override
     public int[] sort(int[] array) {
         buildHeapFrom(array);
-        for (int i=size-1; i>0; i--) {
-            // TODO
+        int[]res = new int[size];
+        int j = 0;
+        for (int i=size-1; i>=0; i--) {
+            swap(i, 0);
+            size--;
+            res[i] = heap[size];
+            heapify(0);
         }
-        return heap;
+        return res;
     }
+
+    private void swap(int a, int b) {
+        int c = heap[a];
+        heap[a] = heap[b];
+        heap[b] = c;
+    }
+
 }
