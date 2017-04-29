@@ -98,11 +98,11 @@ public class Tests {
     public void testCountingSortByCharacter() {
         String[] in = new String[]{"then", "sidd", "hieu", "love", "hate", "they", "desk", "pork", "poll", "aapl", "goog", "msft"};
         String[] out = new String[]{"sidd", "love", "hate", "goog", "desk", "pork", "poll", "aapl", "then", "msft", "hieu", "they"};
-        Problems.countingSortByCharacter(in, 0);
+        Problems.countingSortByCharacter(in, 3);
         assertArrayEquals(in,out);
         in = new String[]{"then", "sidd", "hieu", "love", "hate", "they", "desk", "pork", "poll", "aapl", "goog", "msft"};
         out = new String[]{"hate", "aapl", "desk", "then", "they", "sidd", "hieu", "love", "pork", "poll", "goog", "msft"};
-        Problems.countingSortByCharacter(in, 2);
+        Problems.countingSortByCharacter(in, 1);
         assertArrayEquals(in,out);
     }
 
